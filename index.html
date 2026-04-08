@@ -157,9 +157,12 @@
       </section>
     </main>
 
-    <div class="lightbox" id="lightbox" hidden>
-      <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close preview">Close</button>
-      <div class="lightbox-shell">
+    <div class="lightbox" id="lightbox" hidden aria-hidden="true">
+      <button class="lightbox-backdrop" id="lightbox-backdrop" type="button" aria-label="Close preview"></button>
+      <div class="lightbox-shell" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+        <div class="lightbox-toolbar">
+          <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close preview">Close</button>
+        </div>
         <img id="lightbox-image" alt="">
         <div class="lightbox-meta">
           <p class="lightbox-category" id="lightbox-category"></p>

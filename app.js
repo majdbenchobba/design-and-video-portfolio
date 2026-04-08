@@ -116,6 +116,7 @@ const imageCount = document.querySelector("#image-count");
 const documentCount = document.querySelector("#document-count");
 const collectionCount = document.querySelector("#collection-count");
 const lightbox = document.querySelector("#lightbox");
+const lightboxBackdrop = document.querySelector("#lightbox-backdrop");
 const lightboxClose = document.querySelector("#lightbox-close");
 const lightboxImage = document.querySelector("#lightbox-image");
 const lightboxTitle = document.querySelector("#lightbox-title");
@@ -203,16 +204,19 @@ function renderDocuments() {
 
 function openLightbox(project) {
   lightbox.hidden = false;
+  lightbox.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
   lightboxImage.src = project.image;
   lightboxImage.alt = project.title;
   lightboxCategory.textContent = `${project.categoryLabel} / ${project.collection}`;
   lightboxTitle.textContent = project.title;
   lightboxDescription.textContent = project.description;
+  lightboxClose.focus({ preventScroll: true });
 }
 
 function closeLightbox() {
   lightbox.hidden = true;
+  lightbox.setAttribute("aria-hidden", "true");
   document.body.classList.remove("modal-open");
   lightboxImage.src = "";
   lightboxImage.alt = "";
@@ -224,6 +228,7 @@ function updateStats() {
   collectionCount.textContent = formatCount(uniqueCollectionCount());
 }
 
+lightboxBackdrop.addEventListener("click", closeLightbox);
 lightboxClose.addEventListener("click", closeLightbox);
 lightbox.addEventListener("click", (event) => {
   if (event.target === lightbox) {

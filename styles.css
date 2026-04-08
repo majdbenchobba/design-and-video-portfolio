@@ -476,19 +476,43 @@ button {
   z-index: 20;
   display: grid;
   place-items: center;
-  padding: 1.2rem;
+  padding:
+    max(1rem, env(safe-area-inset-top))
+    max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom))
+    max(1rem, env(safe-area-inset-left));
   background: rgba(12, 12, 14, 0.8);
   backdrop-filter: blur(14px);
 }
 
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
 .lightbox-shell {
+  position: relative;
   width: min(100%, 1100px);
-  max-height: 100%;
+  max-height: calc(100vh - 2rem);
   overflow: auto;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 28px;
   background: rgba(18, 19, 24, 0.95);
   box-shadow: 0 30px 100px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.lightbox-toolbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.85rem 0.85rem 0;
+  background: linear-gradient(180deg, rgba(18, 19, 24, 0.96), rgba(18, 19, 24, 0));
+  z-index: 2;
 }
 
 .lightbox-shell img {
@@ -512,10 +536,6 @@ button {
 }
 
 .lightbox-close {
-  position: absolute;
-  top: 1.2rem;
-  right: 1.2rem;
-  z-index: 2;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
   padding: 0.7rem 1rem;
@@ -570,5 +590,14 @@ body.modal-open {
 
   .hero-stats {
     grid-template-columns: 1fr;
+  }
+
+  .lightbox-shell {
+    max-height: calc(100vh - 1rem);
+    border-radius: 22px;
+  }
+
+  .lightbox-toolbar {
+    padding: 0.7rem 0.7rem 0;
   }
 }
