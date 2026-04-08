@@ -115,13 +115,6 @@ const documentGrid = document.querySelector("#document-grid");
 const imageCount = document.querySelector("#image-count");
 const documentCount = document.querySelector("#document-count");
 const collectionCount = document.querySelector("#collection-count");
-const lightbox = document.querySelector("#lightbox");
-const lightboxBackdrop = document.querySelector("#lightbox-backdrop");
-const lightboxClose = document.querySelector("#lightbox-close");
-const lightboxImage = document.querySelector("#lightbox-image");
-const lightboxTitle = document.querySelector("#lightbox-title");
-const lightboxCategory = document.querySelector("#lightbox-category");
-const lightboxDescription = document.querySelector("#lightbox-description");
 
 function formatCount(value) {
   return value.toString().padStart(2, "0");
@@ -159,7 +152,9 @@ function createGalleryCard(project) {
   card.className = `gallery-card${project.featured ? " featured" : ""}`;
   card.innerHTML = `
     <div class="gallery-media">
-      <img src="${project.image}" alt="${project.title}">
+      <a href="${project.image}" target="_blank" rel="noreferrer">
+        <img src="${project.image}" alt="${project.title}">
+      </a>
     </div>
     <div class="gallery-copy">
       <div class="gallery-meta">
@@ -168,11 +163,9 @@ function createGalleryCard(project) {
       </div>
       <h3>${project.title}</h3>
       <p>${project.description}</p>
-      <button class="gallery-action" type="button">Open preview</button>
+      <a class="gallery-action" href="${project.image}" target="_blank" rel="noreferrer">Open image</a>
     </div>
   `;
-  card.querySelector(".gallery-media").addEventListener("click", () => openLightbox(project));
-  card.querySelector(".gallery-action").addEventListener("click", () => openLightbox(project));
   return card;
 }
 
@@ -202,44 +195,11 @@ function renderDocuments() {
   });
 }
 
-function openLightbox(project) {
-  lightbox.hidden = false;
-  lightbox.setAttribute("aria-hidden", "false");
-  document.body.classList.add("modal-open");
-  lightboxImage.src = project.image;
-  lightboxImage.alt = project.title;
-  lightboxCategory.textContent = `${project.categoryLabel} / ${project.collection}`;
-  lightboxTitle.textContent = project.title;
-  lightboxDescription.textContent = project.description;
-  lightboxClose.focus({ preventScroll: true });
-}
-
-function closeLightbox() {
-  lightbox.hidden = true;
-  lightbox.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("modal-open");
-  lightboxImage.src = "";
-  lightboxImage.alt = "";
-}
-
 function updateStats() {
   imageCount.textContent = formatCount(imageProjects.length);
   documentCount.textContent = formatCount(documents.length);
   collectionCount.textContent = formatCount(uniqueCollectionCount());
 }
-
-lightboxBackdrop.addEventListener("click", closeLightbox);
-lightboxClose.addEventListener("click", closeLightbox);
-lightbox.addEventListener("click", (event) => {
-  if (event.target === lightbox) {
-    closeLightbox();
-  }
-});
-window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !lightbox.hidden) {
-    closeLightbox();
-  }
-});
 
 updateStats();
 buildFilters();
