@@ -1,11 +1,22 @@
-**Majd's Git Portfolio**
+# Design and Video Portfolio
 
-Welcome to my professional portfolio! This repository showcases my work across different roles and projects, including my experience as a Communication Officer, freelance design work, and video production.
+This repository contains a static portfolio site for Majd Ben Chobba. The current public release focuses on design and communication work drawn from campaign systems, event visuals, quote formats, and editorial PDF documents.
 
-**Branches:**
+## What is included
 
-  1. communication-officer: A collection of my campaigns, reports, and communication strategies.
-  2. freelance-design: Graphic design, branding, and UI/UX design work for various clients.
-  3. video-projects: A selection of multimedia and video projects I have worked on.
+- A responsive portfolio site built with plain HTML, CSS, and JavaScript
+- 35 image-based portfolio pieces
+- 7 downloadable PDF documents
+- Filtered gallery browsing and image preview modal
 
-Feel free to explore my work in each branch, and don't hesitate to reach out for collaborations or inquiries!
+## Structure
+
+- `index.html` contains the page layout
+- `styles.css` contains the visual system and responsive styling
+- `app.js` contains the content model, gallery filters, and modal behavior
+- `assets/images` contains the published image work
+- `assets/documents` contains the linked PDF work
+
+## Notes
+
+The repository name leaves room for future video work, but the current public cut is centered on design assets and longer-form communication materials.
