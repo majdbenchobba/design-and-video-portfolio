@@ -170,12 +170,25 @@ function buildFilters() {
 }
 
 function createGalleryCard(project) {
+  const sizes = [
+    "(max-width: 760px) calc(100vw - 32px)",
+    "(max-width: 1024px) calc(50vw - 24px)",
+    project.featured
+      ? "(max-width: 1252px) calc(66.667vw - 26.667px), 808px"
+      : "(max-width: 1252px) calc(33.333vw - 21.333px), 396px",
+  ].join(", ");
+  const sources = [480, 960, 1600]
+    .map((width) => `assets/images/gallery/${project.slug}-${width}.webp ${width}w`)
+    .join(", ");
   const card = document.createElement("article");
   card.className = `gallery-card${project.featured ? " featured" : ""}`;
   card.innerHTML = `
     <div class="gallery-media">
       <a href="${project.image}" target="_blank" rel="noreferrer">
-        <img src="${project.image}" alt="${project.title}">
+        <picture>
+          <source type="image/webp" srcset="${sources}" sizes="${sizes}">
+          <img src="${project.image}" alt="${project.title}" loading="lazy" decoding="async">
+        </picture>
       </a>
     </div>
     <div class="gallery-copy">
