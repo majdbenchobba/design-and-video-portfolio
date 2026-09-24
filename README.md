@@ -41,3 +41,23 @@ Each PDF card shows its actual first page. The seven WebP covers total about
 landscape flyer, and adapts from three columns to two on tablets and one on phones.
 Clicking a cover opens the corresponding PDF; the separate download links remain
 available below it.
+
+## Responsive gallery images
+
+The gallery uses 480, 960, and 1600 px WebP browsing copies selected by the browser
+for each card's size. Images load lazily, and the existing media frames reserve
+their layout space. The original PNG files remain the artwork download links and
+the fallback for browsers without WebP support.
+
+The full 960 px set is 1.24 MB versus 6.24 MB for the original PNG set, an 80%
+reduction. A page loads the selected variants as needed, not all three sizes.
+
+To regenerate browsing copies from the originals with Python and Pillow:
+
+```bash
+python -m pip install Pillow
+python scripts/build_gallery_images.py
+```
+
+The builder preserves original files, color profiles, and transparency. The
+configured variants require source images at least 1600 px wide.
