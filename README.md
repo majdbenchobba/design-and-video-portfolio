@@ -6,14 +6,14 @@ This repository contains a static portfolio site for Majd Ben Chobba. The curren
 
 - A responsive portfolio site built with plain HTML, CSS, and JavaScript
 - 35 image-based portfolio pieces
-- 7 downloadable PDF documents
-- Filtered gallery browsing and image preview modal
+- 7 downloadable PDF documents with cover previews
+- Filtered gallery browsing and direct links to the artwork
 
 ## Structure
 
 - `index.html` contains the page layout
 - `styles.css` contains the visual system and responsive styling
-- `app.js` contains the content model, gallery filters, and modal behavior
+- `app.js` contains the content model, gallery filters, and document cards
 - `assets/images` contains the published image work
 - `assets/documents` contains the linked PDF work
 
@@ -33,3 +33,11 @@ file sizes and separate links to the unchanged originals.
 
 Page counts, page sizes, and extracted text were verified against the originals.
 Use the original PDFs for full print/editing detail.
+
+## Document covers
+
+Each PDF card shows its actual first page. The seven WebP covers total about
+235 KB and load lazily. The layout keeps the whole page visible, including the
+landscape flyer, and adapts from three columns to two on tablets and one on phones.
+Clicking a cover opens the corresponding PDF; the separate download links remain
+available below it.
