@@ -106,19 +106,22 @@ const viewingCopies = {
 };
 
 const documents = [
-  ["Contract Elections", "PDF document", "A contract-format document included as part of the wider election communication work.", "contract-elections.pdf"],
-  ["DC AG19", "PDF dossier", "Long-form editorial work showing multi-page pacing and document structure.", "dc-ag19-dossier.pdf"],
-  ["Dossier Elections", "PDF dossier", "A substantial election-related dossier presented as part of the print portfolio.", "elections-dossier-small.pdf"],
-  ["Magazine 101", "PDF magazine", "Magazine-style layout work with a stronger editorial rhythm than a single-page handout.", "magazine-101.pdf"],
-  ["NDI Flyer", "PDF flyer", "A flyer-format public communication piece prepared as a printable deliverable.", "ndi-flyer-final.pdf"],
-  ["NDI Notebook", "PDF booklet", "A smaller booklet-format document that extends the printed communication materials.", "ndi-notebook.pdf"],
-  ["NDI Letterhead", "PDF stationery", "Brand support material for more formal document applications.", "ndi-letterhead-grey.pdf"],
-].map(([title, format, description, file]) => {
+  ["Contract Elections", "PDF document", "A contract-format document included as part of the wider election communication work.", "contract-elections.pdf", 566, 800],
+  ["DC AG19", "PDF dossier", "Long-form editorial work showing multi-page pacing and document structure.", "dc-ag19-dossier.pdf", 566, 800],
+  ["Dossier Elections", "PDF dossier", "A substantial election-related dossier presented as part of the print portfolio.", "elections-dossier-small.pdf", 566, 800],
+  ["Magazine 101", "PDF magazine", "Magazine-style layout work with a stronger editorial rhythm than a single-page handout.", "magazine-101.pdf", 566, 800],
+  ["NDI Flyer", "PDF flyer", "A flyer-format public communication piece prepared as a printable deliverable.", "ndi-flyer-final.pdf", 800, 566],
+  ["NDI Notebook", "PDF booklet", "A smaller booklet-format document that extends the printed communication materials.", "ndi-notebook.pdf", 572, 800],
+  ["NDI Letterhead", "PDF stationery", "Brand support material for more formal document applications.", "ndi-letterhead-grey.pdf", 566, 800],
+].map(([title, format, description, file, coverWidth, coverHeight]) => {
   const viewingCopy = viewingCopies[file];
   return {
     title,
     format,
     description,
+    cover: `assets/images/document-covers/${file.replace(/\.pdf$/, ".webp")}`,
+    coverWidth,
+    coverHeight,
     href: `assets/documents/${viewingCopy ? viewingCopy.file : file}`,
     size: viewingCopy?.size,
     originalHref: viewingCopy ? `assets/documents/${file}` : null,
@@ -200,11 +203,11 @@ function renderDocuments() {
     const card = document.createElement("article");
     card.className = "document-card";
     card.innerHTML = `
-      <div class="document-swatch">
-        <p class="document-kicker">${documentItem.format}</p>
-        <h3>${documentItem.title}</h3>
-      </div>
+      <a class="document-preview" href="${documentItem.href}" target="_blank" rel="noreferrer" aria-label="Open ${documentItem.title} PDF">
+        <img src="${documentItem.cover}" alt="" width="${documentItem.coverWidth}" height="${documentItem.coverHeight}" loading="lazy" decoding="async">
+      </a>
       <div class="document-copy">
+        <p class="document-kicker">${documentItem.format}</p>
         <h3>${documentItem.title}</h3>
         <p>${documentItem.description}</p>
         <div class="document-downloads">
