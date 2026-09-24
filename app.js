@@ -92,6 +92,19 @@ const quoteProjects = [
 
 const imageProjects = [...campaignSeries, ...topicProjects, ...eventProjects, ...quoteProjects];
 
+const viewingCopies = {
+  "dc-ag19-dossier.pdf": {
+    file: "dc-ag19-dossier-web.pdf",
+    size: "5.4 MB",
+    originalSize: "14.4 MB",
+  },
+  "elections-dossier-small.pdf": {
+    file: "elections-dossier-web.pdf",
+    size: "4.3 MB",
+    originalSize: "34.4 MB",
+  },
+};
+
 const documents = [
   ["Contract Elections", "PDF document", "A contract-format document included as part of the wider election communication work.", "contract-elections.pdf"],
   ["DC AG19", "PDF dossier", "Long-form editorial work showing multi-page pacing and document structure.", "dc-ag19-dossier.pdf"],
@@ -100,12 +113,18 @@ const documents = [
   ["NDI Flyer", "PDF flyer", "A flyer-format public communication piece prepared as a printable deliverable.", "ndi-flyer-final.pdf"],
   ["NDI Notebook", "PDF booklet", "A smaller booklet-format document that extends the printed communication materials.", "ndi-notebook.pdf"],
   ["NDI Letterhead", "PDF stationery", "Brand support material for more formal document applications.", "ndi-letterhead-grey.pdf"],
-].map(([title, format, description, file]) => ({
-  title,
-  format,
-  description,
-  href: `assets/documents/${file}`,
-}));
+].map(([title, format, description, file]) => {
+  const viewingCopy = viewingCopies[file];
+  return {
+    title,
+    format,
+    description,
+    href: `assets/documents/${viewingCopy ? viewingCopy.file : file}`,
+    size: viewingCopy?.size,
+    originalHref: viewingCopy ? `assets/documents/${file}` : null,
+    originalSize: viewingCopy?.originalSize,
+  };
+});
 
 const state = { activeCategory: "all" };
 
@@ -188,7 +207,10 @@ function renderDocuments() {
       <div class="document-copy">
         <h3>${documentItem.title}</h3>
         <p>${documentItem.description}</p>
-        <a class="document-link" href="${documentItem.href}" target="_blank" rel="noreferrer">Open PDF</a>
+        <div class="document-downloads">
+          <a class="document-link" href="${documentItem.href}" target="_blank" rel="noreferrer">${documentItem.originalHref ? `Open web copy (${documentItem.size})` : "Open PDF"}</a>
+          ${documentItem.originalHref ? `<a class="document-link document-original" href="${documentItem.originalHref}" target="_blank" rel="noreferrer">Original PDF (${documentItem.originalSize})</a>` : ""}
+        </div>
       </div>
     `;
     documentGrid.appendChild(card);
